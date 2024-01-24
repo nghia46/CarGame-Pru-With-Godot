@@ -1,0 +1,166 @@
+[gd_scene load_steps=13 format=3 uid="uid://du7ljj5ordxuc"]
+
+[ext_resource type="Script" path="res://Scritps/PlayerController.cs" id="1_7sdcj"]
+[ext_resource type="Texture2D" uid="uid://chrav57tmrang" path="res://Asset/Car 1.png" id="2_7v50t"]
+[ext_resource type="Texture2D" uid="uid://t73p8hdaojtp" path="res://Asset/Road 3.png" id="3_hr1cp"]
+[ext_resource type="PackedScene" uid="uid://df1muvmwalipw" path="res://Prefabs/collider_rook.tscn" id="4_iin6g"]
+[ext_resource type="Texture2D" uid="uid://83g4wkvic3j8" path="res://Asset/Corner 3.png" id="5_j0mrq"]
+[ext_resource type="Texture2D" uid="uid://cxfwsgrsd5488" path="res://Asset/Curve 2.png" id="6_mg8y7"]
+[ext_resource type="Texture2D" uid="uid://d3cyrmatsdt60" path="res://Asset/Curve 1.png" id="7_ec7jc"]
+[ext_resource type="Texture2D" uid="uid://d0rclqpn3yia6" path="res://Asset/Intersection 2.png" id="8_6yfkc"]
+[ext_resource type="Script" path="res://Scritps/Display.cs" id="9_1s2se"]
+[ext_resource type="Script" path="res://Scritps/EventManager.cs" id="11_om8o1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yl115"]
+size = Vector2(352, 156)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wx0y6"]
+line_spacing = 5.0
+font_size = 50
+
+[node name="Game" type="Node2D"]
+
+[node name="EventManager" type="Node2D" parent="."]
+script = ExtResource("11_om8o1")
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+position = Vector2(103, 1)
+rotation = 1.5708
+scale = Vector2(0.42, 0.42)
+zoom = Vector2(0.24, 0.24)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+z_index = 1
+position = Vector2(103, 1)
+rotation = 1.5708
+scale = Vector2(0.42, 0.42)
+script = ExtResource("1_7sdcj")
+Speed = 1600.0
+acceleration = 750.0
+driftMultiplier = 0.3
+maxSpeed = 6000.0
+turnSpeed = 0.03
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(125.119, -1.00001)
+shape = SubResource("RectangleShape2D_yl115")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(125.119, -5.46917e-06)
+rotation = -1.5708
+texture = ExtResource("2_7v50t")
+
+[node name="CameraRemote" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../PlayerCamera")
+
+[node name="Road" type="Node2D" parent="."]
+
+[node name="Road3" type="Sprite2D" parent="Road"]
+position = Vector2(0, -1920.5)
+texture = ExtResource("3_hr1cp")
+
+[node name="Road4" type="Sprite2D" parent="Road"]
+position = Vector2(0, -3907)
+texture = ExtResource("3_hr1cp")
+
+[node name="Road5" type="Sprite2D" parent="Road"]
+position = Vector2(0, 2065)
+texture = ExtResource("3_hr1cp")
+
+[node name="Road6" type="Sprite2D" parent="Road"]
+position = Vector2(0, 79)
+texture = ExtResource("3_hr1cp")
+
+[node name="Corner3" type="Sprite2D" parent="Road"]
+position = Vector2(-103, -5207)
+texture = ExtResource("5_j0mrq")
+
+[node name="Curve2" type="Sprite2D" parent="Road"]
+position = Vector2(-902, -4977)
+texture = ExtResource("6_mg8y7")
+
+[node name="Curve1" type="Sprite2D" parent="Road"]
+position = Vector2(-1506, -3369)
+texture = ExtResource("7_ec7jc")
+
+[node name="Road7" type="Sprite2D" parent="Road"]
+position = Vector2(-1810, -1745)
+texture = ExtResource("3_hr1cp")
+
+[node name="Road8" type="Sprite2D" parent="Road"]
+position = Vector2(-1810, 245)
+texture = ExtResource("3_hr1cp")
+
+[node name="Intersection2" type="Sprite2D" parent="Road"]
+position = Vector2(-1810, 2246)
+texture = ExtResource("8_6yfkc")
+
+[node name="Probs" type="Node2D" parent="."]
+position = Vector2(364, -170)
+
+[node name="Collider-Rook" parent="Probs" instance=ExtResource("4_iin6g")]
+position = Vector2(-1030, -443)
+
+[node name="Collider-Rook2" parent="Probs" instance=ExtResource("4_iin6g")]
+position = Vector2(619, -738)
+
+[node name="Collider-Rook3" parent="Probs" instance=ExtResource("4_iin6g")]
+position = Vector2(1486, 799)
+
+[node name="Collider-Rook4" parent="Probs" instance=ExtResource("4_iin6g")]
+position = Vector2(-1508, 834)
+
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("PlayerSpeed", "PlayerScore")]
+script = ExtResource("9_1s2se")
+PlayerSpeed = NodePath("Control/Player Speed")
+PlayerScore = NodePath("Control2/Player Score")
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Player Speed" type="Label" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -66.0
+offset_right = 66.0
+offset_bottom = 69.0
+grow_horizontal = 2
+text = "Km/h
+"
+label_settings = SubResource("LabelSettings_wx0y6")
+
+[node name="Control2" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Player Score" type="Label" parent="UI/Control2"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -34.5
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0
+"
+label_settings = SubResource("LabelSettings_wx0y6")

@@ -1,0 +1,1 @@
+public record PlayerSpeedMessage(float Player);
