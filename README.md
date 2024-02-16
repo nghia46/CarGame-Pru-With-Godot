@@ -1,5 +1,5 @@
 # 2D Race game with `Godot` and `C# .net` api
-#### Features
+### Features
 - Car like movement (velocity, gravity...)
 - Speed display (km/h)
 - Simple sprites as decoration
